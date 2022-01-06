@@ -154,7 +154,7 @@
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
             <a href="index"> <img alt="image" src="../assets/img/logo.png" class="header-logo" /> <span
-                class="logo-name">htgd</span>
+                class="logo-name">Canza Investment</span>
             </a>
           </div>
           <ul class="sidebar-menu">
