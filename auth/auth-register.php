@@ -1,8 +1,47 @@
-<?php include "../includes/header.php" ?>
+<?php session_start();
+if(isset($_SESSION['clientID'])){
+  ?>
+<script>
+window.location="../home/dashboard.php";
+</script>
+<?php
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Canza Investment</title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="../assets/css/app.min.css">
+  <link rel="stylesheet" href="../assets/bundles/jquery-selectric/selectric.css">
+  <link rel="stylesheet" href="../assets/bundles/bootstrap-social/bootstrap-social.css">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon.ico' />
+
+  	<style type="text/css">
+  		.mt20{
+  			margin-top:20px;
+  		}
+  		.result{
+  			font-size:20px;
+  		}
+      .bold{
+        font-weight: bold;
+      }
+  	</style>
+</head>
+
+
 <body>
   <div class="loader"></div>
   <div id="app">
-    <section class="section">
+  <section class="section">
       <div class="container mt-5">
         <div class="row">
           <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
@@ -40,7 +79,7 @@
                     </div>
                     <div class="form-group col-6">
                       <label for="password2" class="d-block">Password Confirmation</label>
-                      <input id="password2" type="password" class="form-control" name="password-confirm">
+                      <input id="password2" type="password" class="form-control" name="passwordconfirm">
                     </div>
                   </div>
                   <div class="form-group">
@@ -65,4 +104,62 @@
       </div>
     </section>
   </div>
-  <?php include "../includes/footer.php" ?>
+
+
+
+<!-- jQuery 3 -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+
+
+  <!-- General JS Scripts -->
+  <script src="../assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="../assets/bundles/sweetalert/sweetalert.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="../assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+  <script src="../assets/bundles/jquery-selectric/jquery.selectric.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="../assets/js/page/auth-register.js"></script>
+  <!-- Page Specific JS File -->
+  <!-- Template JS File -->
+  <script src="../assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="../assets/js/custom.js"></script>
+
+  <script type="text/javascript">
+$(function() {
+
+  $('#user_auth').submit(function(e){
+    e.preventDefault();
+    var user_auth = $(this).serialize();
+    $.ajax({
+      type: 'POST',
+      url: '../scripts/auth-register',
+      data: user_auth,
+      dataType: 'json',
+      success: function(response){
+        if(response.status==1){
+          swal('Account Created. An email with verification instructions has been sent to the registered email address.', {
+              buttons: true,
+
+            });
+          swal('Error', 'Invalid email or password', 'error');
+        }else{
+          swal('Login successful. You will be redirected shortly.', {
+              buttons: false,
+              timer: 3000,
+            });
+          window.location="../home/dashboard.php";
+
+        }
+
+      }
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>

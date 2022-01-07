@@ -20,6 +20,7 @@
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
+          
           <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
               class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
               <span class="badge headerBadge1">
@@ -75,6 +76,22 @@
                     <span class="time">2 Days Ago</span>
                   </span>
                 </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+              class="nav-link notification-toggle nav-link-lg" onclick="showCart();"><i data-feather="shopping-cart" class="bell"></i>
+            </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">
+                My cart
+                
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <div id="cart_area"></div> 
               </div>
               <div class="dropdown-footer text-center">
                 <a href="#">View All <i class="fas fa-chevron-right"></i></a>
@@ -143,7 +160,7 @@
                 Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a href="auth-login" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              <a href="../auth/logout" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
                 Logout
               </a>
             </div>
@@ -178,21 +195,21 @@
                 <li class="<?php if($uri=='withdraw.php'){echo "active";} ?>"><a class="nav-link " href="withdraw">Withdraw</a></li>
               </ul>
             </li>
-            <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown <?php if($uri=='loans.php'||$uri=='loan-request.php'||$uri=='loan-payment.php'){echo "active";} ?>"><i data-feather="mail"></i><span>Loan</span></a>
+            <li class="dropdown <?php if($uri=='loans.php'||$uri=='loan-request.php'||$uri=='loan-payment.php'){echo "active";} ?>">
+              <a href="#" class="menu-toggle nav-link has-dropdown "><i data-feather="mail"></i><span>Loan</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link <?php if($uri=='loans.php'){echo "active";} ?>" href="loans">Loans</a></li>
-                <li><a class="nav-link <?php if($uri=='loan-request.php'){echo "active";} ?>" href="loan-request">Request Loan</a></li>
-                <li><a class="nav-link <?php if($uri=='loan-payment.php'){echo "active";} ?>" href="loan-payment">Pay Loan</a></li>
+                <li class="<?php if($uri=='loans.php'){echo "active";} ?>"><a class="nav-link " href="loans">Loans</a></li>
+                <li class="<?php if($uri=='loan-request.php'){echo "active";} ?>"><a class="nav-link " href="loan-request">Request Loan</a></li>
+                <li class="<?php if($uri=='loan-payment.php'){echo "active";} ?>"><a class="nav-link " href="loan-payment">Pay Loan</a></li>
               </ul>
             </li>
             <li class="menu-header">UI Elements</li>
-            <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown <?php if($uri=='promotional-tips.php'||$uri=='referral-bonus.php'||$uri=='invite.php'){echo "active";} ?>"><i data-feather="copy"></i><span>Accc</span></a>
+            <li class="dropdown <?php if($uri=='promotional-tips.php'||$uri=='referral-bonus.php'||$uri=='invite.php'){echo "active";} ?>">
+              <a href="#" class="menu-toggle nav-link has-dropdown "><i data-feather="copy"></i><span>Accc</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link <?php if($uri=='promotional-tips.php'){echo "active";} ?>" href="promotional-tips">Promotional tips</a></li>
-                <li><a class="nav-link <?php if($uri=='referral-bonus.php'){echo "active";} ?>" href="referral-bonus">Referral bonus</a></li>
-                <li><a class="nav-link <?php if($uri=='invite.php'){echo "active";} ?>" href="invite">Invite</a></li>
+                <li class="<?php if($uri=='promotional-tips.php'){echo "active";} ?>"><a class="nav-link " href="promotional-tips">Promotional tips</a></li>
+                <li class="<?php if($uri=='referral-bonus.php'){echo "active";} ?>"><a class="nav-link " href="referral-bonus">Referral bonus</a></li>
+                <li class="<?php if($uri=='invite.php'){echo "active";} ?>"><a class="nav-link " href="invite">Invite</a></li>
               </ul>
             </li>
             <li class="dropdown">

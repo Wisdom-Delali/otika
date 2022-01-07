@@ -10,45 +10,33 @@
       <section class="section">
           <div class="section-body">
             <div class="row">
-                
-              <div class="col-12 col-md-4 col-lg-4">
-                <div class="pricing">
+                <?php $commodity_q=mysqli_query($conn, "SELECT * FROM commodity WHERE active_status=1");while($commodity_row=mysqli_fetch_array($commodity_q)){
+                  ?>
+                    <div class="col-12 col-md-4 col-lg-4">
+                <div class="pricing pricing-highlight">
                   <div class="pricing-title">
-                    Developer
+                    <?php echo $commodity_row['commodityName']; ?>
                   </div>
                   <div class="pricing-padding">
                     <div class="pricing-price">
-                      <div>$19</div>
-                      <div>per month</div>
+                      <div>$<?php echo $commodity_row['price']; ?></div>
+                      <div>per share</div>
                     </div>
                     <div class="pricing-details">
                       <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">1 user agent</div>
+                        <p><?php echo $commodity_row['description']; ?></p>
                       </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">Core features</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">1GB storage</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">2 Custom domain</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon bg-danger text-white"><i class="fas fa-times"></i></div>
-                        <div class="pricing-item-label">Live Support</div>
-                      </div>
+                      
                     </div>
                   </div>
                   <div class="pricing-cta">
-                    <a href="#">Subscribe <i class="fas fa-arrow-right"></i></a>
+                    <button id="<?php echo $commodity_row['commodityID'] ?>" onclick="addtocart(this);" type="button">Add to cart <i class="fas fa-arrow-right"></i></button>
                   </div>
                 </div>
               </div>
+                  <?php
+                } ?>
+              
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing pricing-highlight">
                   <div class="pricing-title">
@@ -133,3 +121,9 @@
 
 <?php include "../includes/footer-main.php" ?>
 <?php include "../includes/footer.php" ?>
+
+</body>
+
+
+<!-- index  21 Nov 2019 03:47:04 GMT -->
+</html>
