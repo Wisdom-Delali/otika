@@ -6,6 +6,7 @@ window.location="../home/dashboard.php";
 </script>
 <?php
 }
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,6 +53,7 @@ window.location="../home/dashboard.php";
               </div>
               <div class="card-body">
                 <form id="user_auth">
+                <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>"> 
                   <div class="form-group">
                     <label for="email">Personnel ID</label>
                     <input id="email" type="text" class="form-control" name="email" tabindex="1" required autofocus>
@@ -129,7 +131,7 @@ $(function() {
               buttons: false,
               timer: 3000,
             });
-          window.location.replace("../home/dashboard.php");
+          window.location.replace("../home/dashboard");
         }
 
       }

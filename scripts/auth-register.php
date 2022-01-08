@@ -1,10 +1,15 @@
 <?php
 	session_start();
     include '../includes/getdb.php';
-	if(isset($_POST['email']) && isset($_POST['agree']) && isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['password']) && isset($_POST['passwordconfirm'])){
-		$output = array('status');
+	if(isset($_POST['email']) && isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['password']) && isset($_POST['token'])){
 
+		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
+		if (!$token || $token !== $_SESSION['token']) {
+			header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+			exit;
+		} else {
+		header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Allowed');
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 		$password_confirm = $_POST['passwordconfirm'];
@@ -38,8 +43,8 @@
 			$newclientid = generateRandomString(50);
 
 			mysqli_query($conn, "INSERT INTO `tclient`(`clientID`, `email`, `password`, `first_name`, `last_name`, `country`, `state`, `zip`,
-			 `address`, `phone`, `dob`, `date_joined`, `active`) VALUES ('$newclientid','$email','$password','$first_name','$last_name','$country','$state','$zip',
-			 '$address','$phone','$dob','$date_joined', 0)");
+			 `address`, `phone`, `dob`, `date_joined`, `active` , `verified`, `verificationcode`) VALUES ('$newclientid','$email','$password','$first_name','$last_name','$country','$state','$zip',
+			 '$address','$phone','$dob','$date_joined', 0, 0, '$myRandomString')");
 						
 			$verification_addresss="https://www.app.canzainvestment.com/auth/email-verification?email=".$email."&step=".$myRandomString."&source=".$myRandomString2."";
 
@@ -71,19 +76,22 @@
 			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 			if (mail($to, $subject, $message, $headers)) {
-				$output['status'] = 1; //Mail sent
+				$output = 1; //Mail sent
 			  } else {
-				$output['status'] = 2; //An error occured while sending mail
+				$output = 2; //An error occured while sending mail
 			  }
 
 
 		}
 		else{
-			$output['status'] = 3; // User already exists
+			$output = 3; // User already exists
 		}
 
+		}
+
+		
 	}
 
-	echo json_encode($output);
+	echo $output;
 
 ?>

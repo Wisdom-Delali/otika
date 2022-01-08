@@ -209,7 +209,7 @@
                         </form>
                       </div>
                       <div class="tab-pane fade" id="password-reset" role="tabpanel" aria-labelledby="profile-tab3">
-                      <form method="POST">
+                      <form id="change_password">
                       <div class="form-group">
                             <label for="password">Old Password</label>
                             <input id="old-password" type="password" class="form-control pwstrength" data-indicator="pwindicator"
@@ -253,13 +253,13 @@
 <script type="text/javascript">
 $(function() {
 
-  $('#user_auth').submit(function(e){
+  $('#change_password').submit(function(e){
     e.preventDefault();
-    var user_auth = $(this).serialize();
+    var change_password = $(this).serialize();
     $.ajax({
       type: 'POST',
-      url: '../scripts/auth-user',
-      data: user_auth,
+      url: '../scripts/auth-change-password',
+      data: change_password,
       dataType: 'json',
       success: function(response){
         if(response.error){

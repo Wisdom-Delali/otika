@@ -4,8 +4,14 @@
 	if(isset($_POST['email'])){
 		$output = array('error'=>false);
 
+        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
-		$email = $_POST['email'];
+        if (!$token || $token !== $_SESSION['token']) {
+            // return 405 http status code
+            header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+            exit;
+        } else {
+            $email = $_POST['email'];
 		$password = $_POST['password'];
 
 		$sql = "SELECT * FROM tclient WHERE email = '$email'";
@@ -44,6 +50,8 @@
 			$output['error'] = true;
 		}
 
+        }
+		
 	}
 
 	echo json_encode($output);
