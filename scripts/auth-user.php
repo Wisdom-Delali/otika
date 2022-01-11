@@ -11,15 +11,16 @@
             header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
             exit;
         } else {
-            $email = $_POST['email'];
+        $email = $_POST['email'];
 		$password = $_POST['password'];
 
-		$sql = "SELECT * FROM tclient WHERE email = '$email'";
+		$sql = "SELECT * FROM tclient WHERE email = '$email' AND verified=1 and active=1 and verificationcode=''";
 		$query = $conn->query($sql);
 
 		if($query->num_rows > 0){
 			$row = $query->fetch_assoc();
-            if($password==$row['password']){
+            $passcheck = $row['password'];
+            if(md5($password)==$passcheck){
                 function generateRandomString($length = 25) {
                     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                     $charactersLength = strlen($characters);

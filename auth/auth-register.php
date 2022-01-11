@@ -55,8 +55,8 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
                   <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>"> 
                   <div class="row">
                     <div class="form-group col-6">
-                      <label for="frist_name">First Name</label>
-                      <input id="frist_name" type="text" class="form-control" name="frist_name" autofocus required>
+                      <label for="fir st_name">First Name</label>
+                      <input id="first_name" type="text" class="form-control" name="first_name" autofocus required>
                     </div>
                     <div class="form-group col-6">
                       <label for="last_name">Last Name</label>
@@ -373,7 +373,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
                     </div>
                   </div>
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    <button type="submit" id="registerbutton" class="btn btn-primary btn-lg btn-block">
                       Register
                     </button>
                   </div>
@@ -419,25 +419,39 @@ $(function() {
   $('#user_auth').submit(function(e){
     e.preventDefault();
     var user_auth = $(this).serialize();
-    $.ajax({
+    var password = document.getElementById("password").value;
+    var passwordconfirm = document.getElementById("password2").value;
+    if(password==passwordconfirm){
+      $("#registerbutton").addClass("disabled btn-progress");
+      swal('Hold tight, your account is being created!', {
+          buttons: false,
+          timer: 20000,
+        });
+      $.ajax({
       type: 'POST',
       url: '../scripts/auth-register',
       data: user_auth,
       dataType: 'json',
       success: function(response){
-        if(response==1){
+        if(response.error){
+          swal('Sorry!', 'An error occured. Please try again another time.', 'error');
+        }else{
           swal('Account Created. An email with verification instructions has been sent to the registered email address.', {
               buttons: true,
             });
-        }else{
-          swal('Login successful. You will be redirected shortly.', {
-              buttons: false,
-              timer: 3000,
-            });
+  
+            setTimeout(function(){
+              window.location.replace("auth-login");
+            }, 5000);
+            
         }
 
       }
     });
+    }else{
+      swal('Sorry!', 'The passwords you entered do not match.', 'error');
+    }
+  
   });
 
 });
