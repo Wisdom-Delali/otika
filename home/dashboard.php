@@ -1,21 +1,42 @@
 <?php include "../includes/header.php";
-$dashboard_q=mysqli_query($conn, "SELECT *, SUM(shareamount) as totalshareamount, SUM(balance) as totalbalance,  FROM tclientshares LEFT JOIN commodity ON tclientshares.commodityID=commodity.commodityID WHERE tclientshares.clientID='$client_id'"); // Main query
-$dashboard_row=mysqli_fetch_array($dashboard_q);
+$totalsharebalancebefore=0;
+$totalsharebalancenow=0;
+$totalshareamount=0;
+$dashboard_q=mysqli_query($conn, "SELECT * FROM tclientshares LEFT JOIN commodity ON tclientshares.commodityID=commodity.commodityID WHERE tclientshares.clientID='$client_id'"); // Main query
 $commodities = mysqli_num_rows($dashboard_q);
-$totalshareamount = $dashboard_row['totalshareamount'];
-$totalbalance = $dashboard_row['totalbalance'];
-$bal1 = $dashboard_row['price'] * $dashboard_row['shareamount'];
-$newbal = 0;
-$newbal += $bal;
-if($totalbalance>$newbal){
+while($dashboard_row=mysqli_fetch_array($dashboard_q)){
+  $shareamount = $dashboard_row['shareamount'];
+  $sharebalancebefore = $dashboard_row['shareamount']*$dashboard_row['pricebefore'];
+  $sharebalancenow = $dashboard_row['shareamount']*$dashboard_row['price'];
+  $totalsharebalancebefore+=$sharebalancebefore;
+  $totalsharebalancenow+=$sharebalancenow;
+  $totalshareamount+=$shareamount;
+}
+
+if($totalsharebalancebefore<1){
   $balstat = "Increase";
-  $percent = ($totalbalance/$newbal)*100;
+  $percent = 0;
+  $color = "green";
+}elseif($totalsharebalancebefore==$totalsharebalancenow){
+  $balstat = "Increase";
+  $percent = 0;
   $color = "green";
 }else{
-  $balstat = "Decrease";
-  $percent = ($newbal/$totalbalance)*100;
-  $color = "orange";
-};
+  if($totalsharebalancebefore<$totalsharebalancenow){
+    $balstat = "Increase";
+    $op = $totalsharebalancenow-$totalsharebalancebefore;
+    $percent = ($op/$totalsharebalancebefore)*100;
+    $color = "green";
+  }else{
+    $balstat = "Decrease";
+    $op = $totalsharebalancebefore-$totalsharebalancenow;
+    $percent = ($op/$totalsharebalancebefore)*100;
+    $color = "orange";
+  };
+}
+
+
+
 $dashboard_q2=mysqli_query($conn, "SELECT * FROM tclient WHERE clientID='$client_id' AND session_id='$session_id'"); // Referral bonus
 $dashboard_row2=mysqli_fetch_array($dashboard_q2);
 
@@ -41,7 +62,6 @@ $pendingtransactions=mysqli_num_rows($dashboard_q3);
                         <div class="card-content">
                           <h5 class="font-15">My shares</h5>
                           <h2 class="mb-3 font-18"><?php echo $totalshareamount; ?></h2>
-                          <p class="mb-0"><span class="col-green">10%</span> Increase</p>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -62,7 +82,7 @@ $pendingtransactions=mysqli_num_rows($dashboard_q3);
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
                           <h5 class="font-15"> Account balance</h5>
-                          <h2 class="mb-3 font-18">$ <?php echo number_format($totalbalance,2); ?></h2>
+                          <h2 class="mb-3 font-18">$ <?php echo number_format($totalsharebalancenow,2); ?></h2>
                           <p class="mb-0"><span class="col-<?php echo $color; ?>"><?php echo number_format($percent,2); ?>%</span> <?php echo $balstat; ?></p>
                         </div>
                       </div>

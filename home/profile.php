@@ -6,9 +6,6 @@
     <div class="main-wrapper main-wrapper-1">
       <?php include "../includes/navbar.php" ?>
       <?php 
-        $client_id=$_SESSION['clientID'];
-        $session_id=$_SESSION['session_id'];
-        $profile_q=mysqli_query($conn, "SELECT * FROM tclient WHERE clientID='$client_id' AND session_id='$session_id'");
         if(mysqli_num_rows($profile_q)!=1){
             ?>
             <script>
@@ -16,7 +13,6 @@
             </script>
             <?php
         }
-        $profile_row=mysqli_fetch_array($profile_q);
         ?>
       <!-- Main Content -->
       <div class="main-content">

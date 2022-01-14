@@ -12,6 +12,7 @@
     $client_id=$_SESSION['clientID'];
     $session_id=$_SESSION['session_id'];
     $profile_q=mysqli_query($conn, "SELECT * FROM tclient WHERE clientID='$client_id' AND session_id='$session_id'");
+    $profile_row=mysqli_fetch_array($profile_q);
     if(mysqli_num_rows($profile_q)!=1){
         ?>
         <script>
