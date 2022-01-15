@@ -112,6 +112,14 @@ function generateRandomString($length = 25) {
                             </span>
                           </label>
                         </div>
+                        <div class="col-6 col-sm-4">
+                          <label class="imagecheck mb-4">
+                            <input name="imagecheck" type="radio" value="LTCT" class="imagecheck-input" required />
+                            <span class="imagecheck-figure">
+                              <img src="../assets/img/cards/visa.png" alt="}" class="imagecheck-image">
+                            </span>
+                          </label>
+                        </div>
                       </div>
                     </div>
                     <div class="row mt-4">
