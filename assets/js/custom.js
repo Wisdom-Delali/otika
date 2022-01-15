@@ -47,6 +47,90 @@ $(document).on('click', '.addtocart', function() {
     }
 });
 
+$('#loanpaymentform').submit(function(e) {
+    e.preventDefault();
+    var loanpaymentform = $(this).serialize();
+    var amount = $('#amount').val();
+
+    if (amount.match(/^\d+$/)) {
+        iziToast.success({
+            title: 'Hold tight!',
+            message: 'Processing payment',
+            position: 'topRight'
+          });
+        $.ajax({
+            type: 'POST',
+            url: '../scripts/scripts',
+            data: loanpaymentform,
+            dataType: 'json',
+
+            success: function(response) {
+                if (response.error) {
+                    swal('Error', 'Sorry an error occured', 'error');
+                } else {
+                    swal('Successful. Loan repayment successful!.', {
+                        buttons: true,
+                        timer: 2000,
+                    });
+                    setTimeout(function() {
+                        window.location.replace("loans");
+                    }, 3000);
+                }
+
+            }
+
+
+        });
+
+    } else if (qty == "") {
+        swal('Error', 'Enter a quantity', 'error');
+    } else {
+        swal('Error', 'Enter a numeric value', 'error');
+    }
+});
+
+
+$('#loanrequestform').submit(function(e) {
+    e.preventDefault();
+    var loanrequestform = $(this).serialize();
+    var amount = $('#amount').val();
+
+    if (amount.match(/^\d+$/)) {
+        iziToast.success({
+            title: 'Hold tight!',
+            message: 'Processing request',
+            position: 'topRight'
+          });
+        $.ajax({
+            type: 'POST',
+            url: '../scripts/scripts',
+            data: loanrequestform,
+            dataType: 'json',
+
+            success: function(response) {
+                if (response.error) {
+                    swal('Error', 'Sorry an error occured', 'error');
+                } else {
+                    swal('Successful. Loan request submitted!.', {
+                        buttons: true,
+                        timer: 2000,
+                    });
+                    setTimeout(function() {
+                        window.location.replace("loans");
+                    }, 3000);
+                }
+
+            }
+
+
+        });
+
+    } else if (qty == "") {
+        swal('Error', 'Enter a quantity', 'error');
+    } else {
+        swal('Error', 'Enter a numeric value', 'error');
+    }
+});
 
 $('#depositform').submit(function(e) {
     var depositform = $(this).serialize();

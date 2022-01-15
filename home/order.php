@@ -33,7 +33,7 @@ $token = $_GET['csrf'];
                         </div>
                           
                       </h2>
-                      <div class="invoice-number">Order <?php echo $orderid; ?></div>
+                      <div class="invoice-number">Order <?php echo mb_strimwidth($orderid, 0, 10, '...') ; ?></div>
                     </div>
                     <hr>
                     

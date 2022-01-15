@@ -68,7 +68,7 @@ function generateRandomString($length = 25) {
                     <div class="section-title">Order Summary</div>
                     <p class="section-lead">All items here cannot be deleted.</p>
                     <div class="table-responsive">
-                      <form method="POST" id="depositform" action="../gourl/Examples/pay-per-product" target="print_popup" onsubmit="window.open('about:blank','print_popup','width=600,height=800');">
+                      <form method="POST" id="depositform" action="coinpayment" target="print_popup" onsubmit="window.open('about:blank','print_popup','width=600,height=800');">
                         <input type="hidden" name="depositC" value="<?php echo $_SESSION['token'] ?? '' ?>" required> 
                         <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>" required> 
                             <label>Amount in USD</label>
@@ -79,10 +79,40 @@ function generateRandomString($length = 25) {
                                   </div>
                                 </div>
                                 <input type="number" id="amount" name="amount" required class="form-control currency">
-                                <input type="hidden" name="orderID" value="<?php echo $myRandomString; ?>">
-                                <input type="hidden" name="clientID" value="<?php echo $client_id; ?>">
+                                <input type="hidden" name="orderID" value="<?php echo $myRandomString; ?>" required>
+                                <input type="hidden" name="clientID" value="<?php echo $client_id; ?>" required>
+                                <input type="hidden" name="email" value="<?php echo $profile_row['email']; ?>" required>
                               </div>
                       
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Payment method</label>
+                      <div class="row gutters-sm">
+                        <div class="col-6 col-sm-4">
+                          <label class="imagecheck mb-4">
+                            <input name="imagecheck" type="radio" value="BTC" class="imagecheck-input" required checked/>
+                            <span class="imagecheck-figure">
+                              <img src="../assets/img/cards/bitcoin.png" alt="}" class="imagecheck-image">
+                            </span>
+                          </label>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                          <label class="imagecheck mb-4">
+                            <input name="imagecheck" type="radio" value="ETH" class="imagecheck-input" required />
+                            <span class="imagecheck-figure">
+                              <img src="../assets/img/cards/ethereum.png" alt="}" class="imagecheck-image">
+                            </span>
+                          </label>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                          <label class="imagecheck mb-4">
+                            <input name="imagecheck" type="radio" value="DOGE" class="imagecheck-input" required />
+                            <span class="imagecheck-figure">
+                              <img src="../assets/img/cards/dogecoin.png" alt="}" class="imagecheck-image">
+                            </span>
+                          </label>
+                        </div>
+                      </div>
                     </div>
                     <div class="row mt-4">
                       <div class="col-lg-8">

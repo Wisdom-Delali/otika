@@ -26,6 +26,62 @@ if(isset($_POST['addtocart'])){
         $output['error'] = false;
     }
 
+}elseif(isset($_POST['loanrequestform'])){
+    $output = array('error'=>true);
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_STRING);
+    $orderID = filter_input(INPUT_POST, 'orderID', FILTER_SANITIZE_STRING);
+    $purpose = $_POST['purpose'];
+    $checkout = filter_input(INPUT_POST, 'loanrequestform', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token'] || !$checkout || $checkout !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        $output['error'] = true;
+    } else {
+        mysqli_query($conn, "INSERT INTO `loans`( `orderID`, `clientID`, `amount`, `purpose`, `status`, balance) VALUES ('$orderID','$client_id','$amount','$purpose',0, '$balance')");
+        $output['error'] = false;
+    }
+
+
+}elseif(isset($_POST['loanpaymentform'])){
+    $output = array('error'=>true);
+    $token = filter_input(INPUT_POST, 'paytoken', FILTER_SANITIZE_STRING);
+    $amount = $_POST['amount'];
+    $orderID = filter_input(INPUT_POST, 'orderID', FILTER_SANITIZE_STRING);
+    $checkout = filter_input(INPUT_POST, 'loanpaymentform', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['paytoken'] || !$checkout || $checkout !== $_SESSION['paytoken']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        $output['error'] = true;
+    } else {
+        $accountbalance = $profile_row['client_account_balance'];
+        if($amount>$accountbalance){
+            $output['error'] = true;
+        }else{
+            $loan_q=mysqli_query($conn, "SELECT * FROM loans where orderID='$orderID' and clientID='$client_id' LIMIT 1");
+            $loan_row=mysqli_fetch_array($loan_q);
+            $loanbalance=$loan_row['balance'];
+            $amountpaid=$loan_row['paid'];
+            if($amount>$loanbalance){
+                $output['error'] = true;
+            }else{
+                $newclientbalance = $accountbalance-$amount;
+                $newloanbalance = $loanbalance-$amount;
+                $newloanpaid = $amountpaid+$amount;
+                mysqli_query($conn, "INSERT INTO `loan_details`(`clientID`, `orderID`, `amountpaid`, `amountleft`, `status`) VALUES ('$client_id','$orderID','$amount','$newloanbalance',1)");
+                mysqli_query($conn, "UPDATE tclient SET client_account_balance='$newclientbalance' WHERE clientID='$client_id'");
+                if($amount<$loanbalance){
+                    mysqli_query($conn, "UPDATE loans SET paid='$newloanpaid', balance='$newloanbalance' WHERE clientID='$client_id' AND orderID='$orderID'");
+                }elseif($amount==$loanbalance){
+                    mysqli_query($conn, "UPDATE loans SET paid='$newloanpaid', balance='$newloanbalance', status=2 WHERE clientID='$client_id' AND orderID='$orderID'");
+                }
+                $output['error'] = false;
+            }
+        }
+        
+    }
+
+
 }elseif(isset($_POST['depositC'])){
     $output = array('error'=>true);
     $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
