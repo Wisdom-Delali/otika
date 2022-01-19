@@ -73,6 +73,16 @@ class CoinPaymentsAPI {
 		return $this->api_call('get_callback_address', $req);
 	}
 
+
+
+public function GetTransactionInformation($txId) {      
+    $req = array(
+        'txid' => $txId,
+
+    );
+    return $this->api_call('get_tx_info', $req);
+}
+
 	/**
 	 * Creates a withdrawal from your account to a specified address.<br />
 	 * @param amount The amount of the transaction (floating point to 8 decimals).

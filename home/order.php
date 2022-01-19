@@ -6,7 +6,7 @@ $token = $_GET['csrf'];
         exit;
     } else {
         $order_q=mysqli_query($conn, "SELECT * FROM share_transactions_details LEFT JOIN commodity ON share_transactions_details.commodityID=commodity.commodityID WHERE share_transactions_details.clientID='$client_id' AND share_transactions_details.orderID='$orderid'");
-        $sorder_q=mysqli_query($conn, "SELECT * FROM share_transactions WHERE orderID='$orderid' AND orderID='$orderid'");
+        $sorder_q=mysqli_query($conn, "SELECT * FROM share_transactions WHERE clientID='$client_id' AND orderID='$orderid'");
         $sorder_row=mysqli_fetch_array($sorder_q);
     }
 ?>

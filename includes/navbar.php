@@ -195,9 +195,8 @@
             <li class="dropdown <?php if($uri=='deposit.php'||$uri=='withdraw.php' ||$uri=='my-transactions.php'){echo "active";}else{} ?>">
               <a href="#" class="menu-toggle nav-link has-dropdown "><i data-feather="command"></i><span>Account</span></a>
               <ul class="dropdown-menu">
-                <li class="<?php if($uri=='deposit.php'){echo "active";} ?>"><a class="nav-link" href="deposit">Deposit</a></li>
-<!--                 <li class="<?php if($uri=='withdraw.php'){echo "active";} ?>"><a class="nav-link " href="withdraw">Withdraw</a></li>
- -->                <li class="<?php if($uri=='my-transactions.php'){echo "active";}else{} ?>"><a class="nav-link " href="my-transactions">My Transactions</a></li>
+                <li class="<?php if($uri=='deposit.php'){echo "active";} ?>"><a class="nav-link" href="deposit">Deposit</a></li>                 <li class="<?php if($uri=='withdraw.php'){echo "active";} ?>"><a class="nav-link " href="withdraw">Withdraw</a></li>
+                <li class="<?php if($uri=='my-transactions.php'){echo "active";}else{} ?>"><a class="nav-link " href="my-transactions">My Transactions</a></li>
               </ul>
             </li>
             <li class="dropdown <?php if($uri=='loans.php'||$uri=='loan.php'){echo "active";} ?>">

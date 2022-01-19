@@ -93,8 +93,27 @@ if(isset($_POST['addtocart'])){
         header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
         $output['error'] = true;
     } else {
-        mysqli_query($conn, "INSERT INTO `ttransactions`(`clientID`, `orderID`, `trantype`, `status`, `tranamount`, `tranmethod`) VALUES ('$client_id','$orderID',1,0,'$amount',1)");
         $output['error'] = false;
+    }
+
+
+}elseif(isset($_POST['withdrawC'])){
+    $output = array('error'=>true);
+    $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+    $orderID = filter_input(INPUT_POST, 'orderID', FILTER_SANITIZE_STRING);
+    $amount = $_POST['amount'];
+    $checkout = filter_input(INPUT_POST, 'withdrawC', FILTER_SANITIZE_STRING);
+    if (!$token || $token !== $_SESSION['token'] || !$checkout || $checkout !== $_SESSION['token']) {
+        // return 405 http status code
+        header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
+        $output['error'] = true;
+    } else {
+        if($amount>=$profile_row['client_account_balance']){
+            $output['error'] = true;
+        }else{
+            $output['error'] = false;
+        }
+        
     }
 
 

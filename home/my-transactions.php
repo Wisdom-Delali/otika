@@ -1,5 +1,18 @@
 <?php include "../includes/header.php";
 $transactions_q=mysqli_query($conn, "SELECT * FROM ttransactions WHERE clientID='$client_id'");
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
+function generateRandomString($length = 25) {
+    $characters = '-!%$0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+};
+//usage 
+$myRandomString = generateRandomString(200);
+$_SESSION['uid'] = $myRandomString;
 
 ?>
 
@@ -42,7 +55,7 @@ $transactions_q=mysqli_query($conn, "SELECT * FROM ttransactions WHERE clientID=
                                 <td><?php if($transaction_row['trantype']==1){echo "Deposit";}else{echo "Withdrawal";} ?></td>
                                 <td><?php echo number_format($transaction_row['tranamount'],2); ?></td>
                                 <td><div class="badge badge-<?php if($transaction_row['status']==1){echo "success";}else{echo "warning";} ?> badge-shadow"><?php if($transaction_row['status']==1){echo "Completed";}else{echo "Pending";} ?></div></td>
-                                <td><a href="#" class="btn btn-primary">Detail</a></td>
+                                <td><a href="transaction?csrf=<?php echo $_SESSION['token'] ?? '' ?>&order=<?php echo $transaction_row['orderID']; ?>&uid=<?php echo $myRandomString ?? '' ?>&cli=true&sha=true" class="btn btn-primary">Details</a></td>
                               </tr>
                             <?php
                           }; ?>

@@ -92,7 +92,7 @@ function generateRandomString($length = 25) {
                           <label class="imagecheck mb-4">
                             <input name="imagecheck" type="radio" value="BTC" class="imagecheck-input" required checked/>
                             <span class="imagecheck-figure">
-                              <img src="../assets/img/cards/bitcoin.png" alt="}" class="imagecheck-image">
+                              <img src="../assets/img/cards/bitcoin.png" alt="}" class="imagecheck-image" width="60px">
                             </span>
                           </label>
                         </div>
@@ -100,7 +100,7 @@ function generateRandomString($length = 25) {
                           <label class="imagecheck mb-4">
                             <input name="imagecheck" type="radio" value="ETH" class="imagecheck-input" required />
                             <span class="imagecheck-figure">
-                              <img src="../assets/img/cards/ethereum.png" alt="}" class="imagecheck-image">
+                              <img src="../assets/img/cards/ethereum.png" alt="}" class="imagecheck-image" width="60px">
                             </span>
                           </label>
                         </div>
@@ -108,7 +108,7 @@ function generateRandomString($length = 25) {
                           <label class="imagecheck mb-4">
                             <input name="imagecheck" type="radio" value="DOGE" class="imagecheck-input" required />
                             <span class="imagecheck-figure">
-                              <img src="../assets/img/cards/dogecoin.png" alt="}" class="imagecheck-image">
+                              <img src="../assets/img/cards/degecoin.png" alt="}" class="imagecheck-image" width="60px">
                             </span>
                           </label>
                         </div>
@@ -116,7 +116,7 @@ function generateRandomString($length = 25) {
                           <label class="imagecheck mb-4">
                             <input name="imagecheck" type="radio" value="LTCT" class="imagecheck-input" required />
                             <span class="imagecheck-figure">
-                              <img src="../assets/img/cards/visa.png" alt="}" class="imagecheck-image">
+                              <img src="../assets/img/cards/visa.png" alt="}" class="imagecheck-image" width="60px">
                             </span>
                           </label>
                         </div>

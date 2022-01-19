@@ -37,11 +37,14 @@ if(isset($_POST['depositC'])){
             'item_name' => 'Deposit',
             'item_number' => $client_id,
             'address' => '', // leave blank send to follow your settings on the Coin Settings page
-            'ipn_url' => 'https://app.canzainvestment.com/coinpayments/transaction_ipn_handler',
+            'ipn_url' => 'http://app.canzainvestment.com/coinpayments/transaction_ipn_handler',
         );
         // See https://www.coinpayments.net/apidoc-create-transaction for all of the available fields  
         $result = $cps->CreateTransaction($req);
         if ($result['error'] == 'ok') {
+            $txn_id=$result['result']['txn_id'];
+            $address=$result['result']['address'];
+            mysqli_query($conn, "INSERT INTO `ttransactions`(`clientID`, `address`, `txn_id`, `orderID`, `trantype`, `status`, `tranamount`, `tranmethod`) VALUES ('$client_id', '$address', '$txn_id','$order',1,0,'$amount',1)");
             $le = php_sapi_name() == 'cli' ? "\n" : '<br />';
             ?>
                 <section class="section">
@@ -54,13 +57,11 @@ if(isset($_POST['depositC'])){
                             </div>
                             <div class="card-body">
                                 <div class="empty-state" data-height="400">
-                                <div class="empty-state-icon">
                                     <div class="buttons">
                                         <a href="#" class="btn btn-lg btn-sm btn-warning">Processing Payment</a>
                                         <a href="#" class="btn btn-lg disabled btn-primary btn-progress"></a>
                                         <a href="#" class="btn btn-lg disabled btn-primary"><?php echo $currency; ?></a>
                                     </div>
-                                </div>
                                 <h2>Deposit payment</h2>
                                 <p class="lead">
                                     <?php print 'Address: '.$result['result']['address'].$le; ?>
@@ -68,7 +69,7 @@ if(isset($_POST['depositC'])){
                                 <p class="lead">
                                     <?php print 'Send: '.sprintf('%.08f', $result['result']['amount']).' '. $currency.$le; ?>
                                 </p>
-                                <a href="#" class="btn btn-primary mt-4">Your account will be credited once payment has been confirmed.</a>
+                                <a href="#" class="btn btn-primary mt-4">Your account will be credited once payment has been confirmed.</a><br>
                                 <a href="<?php print $result['result']['status_url'].$le ?>" class="mt-4 bb">Monitor transaction</a>
                                 </div>
                             </div>

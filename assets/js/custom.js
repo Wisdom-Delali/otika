@@ -57,7 +57,7 @@ $('#loanpaymentform').submit(function(e) {
             title: 'Hold tight!',
             message: 'Processing payment',
             position: 'topRight'
-          });
+        });
         $.ajax({
             type: 'POST',
             url: '../scripts/scripts',
@@ -100,7 +100,7 @@ $('#loanrequestform').submit(function(e) {
             title: 'Hold tight!',
             message: 'Processing request',
             position: 'topRight'
-          });
+        });
         $.ajax({
             type: 'POST',
             url: '../scripts/scripts',
@@ -169,6 +169,85 @@ $('#depositform').submit(function(e) {
     } else {
         swal('Error', 'Enter a numeric value', 'error');
     }
+});
+
+$('#withdrawform').submit(function(e) {
+    e.preventDefault();
+    var withdrawform = $(this).serialize();
+    var amount = $('#amount').val();
+    swal('Successful. You payment has been initiated successfully.', {
+        buttons: true,
+    });
+    if (amount.match(/^\d+$/)) {
+
+        $.ajax({
+            type: 'POST',
+            url: '../scripts/scripts',
+            data: withdrawform,
+            dataType: 'json',
+
+            success: function(response) {
+                if (response.error) {
+                    swal('Error', 'Sorry an error occured', 'error');
+                } else {
+                    swal('Successful. Payment initiated.', {
+                        buttons: false,
+                        timer: 3000,
+                    });
+                    e.currentTarget.submit();
+                    setTimeout(function() {
+                        window.location.replace("my-transactions");
+                    }, 3000);
+                }
+
+            }
+
+
+        });
+
+    } else if (qty == "") {
+        swal('Error', 'Enter a quantity', 'error');
+    } else {
+        swal('Error', 'Enter a numeric value', 'error');
+    }
+});
+
+$('#callback').submit(function(e) {
+    e.preventDefault();
+    var callback = $(this).serialize();
+    var amount = $('#amount').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '../coinpayments/callback',
+        data: callback,
+        dataType: 'json',
+
+        success: function(response) {
+            if (response.error) {
+
+                setTimeout(function() {
+                    iziToast.error({
+                        title: 'Sorry!',
+                        message: 'An error occured',
+                        position: 'topRight'
+                    });
+                }, 3000);
+            } else {
+                swal('Done', 'Your payment has been confirmed!', 'success');
+                setTimeout(function() {
+                    e.currentTarget.submit();
+                }, 3000);
+
+
+            }
+
+        }
+
+
+    });
+
+
 });
 
 
