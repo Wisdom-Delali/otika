@@ -203,6 +203,15 @@
               <a href="#" class="menu-toggle nav-link has-dropdown "><i data-feather="mail"></i><span>Loan</span></a>
               <ul class="dropdown-menu">
                 <li class="<?php if($uri=='loans.php'){echo "active";} ?>"><a class="nav-link " href="loans">Loans</a></li>
+                <li class="<?php if($uri=='loans.php'){echo "active";} ?>"><a class="nav-link " href="#" data-toggle="modal" data-target="#requestloanmodal">Request Loan</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="menu-toggle nav-link has-dropdown "><i data-feather="external-link"></i><span>Share</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link " href="https://wa.me/?text=Join%20me%20on%20Canza%20Investment%20and%20start%20earning%20profits%20on%20your%20shares.">Whatsapp</a></li>
+                <li><a class="nav-link " href="https://www.facebook.com/sharer/sharer.php?u=canzainvestment.com">Facebook</a></li>
+                <li><a class="nav-link " href="https://twitter.com/intent/tweet?url=canzainvestment.com">Twitter</a></li>
               </ul>
             </li>
             

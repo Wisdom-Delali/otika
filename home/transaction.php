@@ -1,6 +1,6 @@
 <?php include "../includes/header.php";
-$orderid=$_GET['order'];
-$token = $_GET['csrf'];
+$orderid=$_POST['order'];
+$token = $_POST['csrf'];
     if (!$token || $token !== $_SESSION['token']) {
         header('dashboard');
         exit;
@@ -88,10 +88,13 @@ $token = $_GET['csrf'];
 ?>
 <script>
 setInterval(function(){
-    window.alert("Done");
     $('#callback').submit();
   
 },5000);
+
+
+
+
 </script>
 <?php
 

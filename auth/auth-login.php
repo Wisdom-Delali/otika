@@ -110,36 +110,9 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
   <!-- Template JS File -->
   <script src="../assets/js/scripts.js"></script>
   <!-- Custom JS File -->
-  <script src="../assets/js/custom.js"></script>
+  <script src="../assets/js/vue.min.js"></script>
 
-  <script type="text/javascript">
-$(function() {
 
-  $('#user_auth').submit(function(e){
-    e.preventDefault();
-    var user_auth = $(this).serialize();
-    $.ajax({
-      type: 'POST',
-      url: '../scripts/auth-user',
-      data: user_auth,
-      dataType: 'json',
-      success: function(response){
-        if(response.error){
-          swal('Error', 'Invalid email or password', 'error');
-        }else{
-          swal('Login successful. You will be redirected shortly.', {
-              buttons: false,
-              timer: 3000,
-            });
-          window.location.replace("../home/dashboard");
-        }
-
-      }
-    });
-  });
-
-});
-</script>
 
 </body>
 </html>

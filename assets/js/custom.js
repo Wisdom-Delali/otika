@@ -215,7 +215,6 @@ $('#withdrawform').submit(function(e) {
 $('#callback').submit(function(e) {
     e.preventDefault();
     var callback = $(this).serialize();
-    var amount = $('#amount').val();
 
     $.ajax({
         type: 'POST',
@@ -226,13 +225,7 @@ $('#callback').submit(function(e) {
         success: function(response) {
             if (response.error) {
 
-                setTimeout(function() {
-                    iziToast.error({
-                        title: 'Sorry!',
-                        message: 'An error occured',
-                        position: 'topRight'
-                    });
-                }, 3000);
+
             } else {
                 swal('Done', 'Your payment has been confirmed!', 'success');
                 setTimeout(function() {
@@ -289,6 +282,69 @@ $(document).on('click', '.sell', function() {
     }
 });
 
+
+
+$('#user_auth').submit(function(e) {
+    e.preventDefault();
+    var user_auth = $(this).serialize();
+    $.ajax({
+        type: 'POST',
+        url: '../scripts/auth-user',
+        data: user_auth,
+        dataType: 'json',
+        success: function(response) {
+            if (response.error) {
+                swal('Error', 'Invalid email or password', 'error');
+            } else {
+                swal('Login successful. You will be redirected shortly.', {
+                    buttons: false,
+                    timer: 3000,
+                });
+                window.location.replace("../home/dashboard");
+            }
+
+        }
+    });
+});
+
+
+$('#user_auth_reg').submit(function(e) {
+    e.preventDefault();
+    var user_auth = $(this).serialize();
+    var password = document.getElementById("password").value;
+    var passwordconfirm = document.getElementById("password2").value;
+    if (password == passwordconfirm) {
+        $("#registerbutton").addClass("disabled btn-progress");
+        swal('Hold tight, your account is being created!', {
+            buttons: false,
+            timer: 20000,
+        });
+        $.ajax({
+            type: 'POST',
+            url: '../scripts/auth-register',
+            data: user_auth,
+            dataType: 'json',
+            success: function(response) {
+                if (response.error) {
+                    swal('Sorry!', 'An error occured. Please try again another time.', 'error');
+                } else {
+                    swal('Account Created. An email with verification instructions has been sent to the registered email address.', {
+                        buttons: true,
+                    });
+
+                    setTimeout(function() {
+                        window.location.replace("auth-login");
+                    }, 5000);
+
+                }
+
+            }
+        });
+    } else {
+        swal('Sorry!', 'The passwords you entered do not match.', 'error');
+    }
+
+});
 
 
 $('#checkout_form').submit(function(e) {

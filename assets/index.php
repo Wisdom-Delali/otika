@@ -428,7 +428,7 @@
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/animation.js"></script>
     <script src="assets/js/imagesloaded.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/vue.min.js"></script>
     <script>
         document.oncontextmenu = document.body.oncontextmenu = function () {
             return !1

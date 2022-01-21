@@ -1,6 +1,6 @@
 <?php include "../includes/header.php";
-$orderid=$_GET['order'];
-$token = $_GET['csrf'];
+$orderid=$_POST['order'];
+$token = $_POST['csrf'];
     if (!$token || $token !== $_SESSION['token']) {
         header('dashboard');
         exit;
@@ -77,9 +77,7 @@ $token = $_GET['csrf'];
                         <div class="section-title">Payment Method</div>
                         <p class="section-lead">The payment method that we provide is to make it easier for you to pay
                           invoices.</p>
-                        <div class="images">
-                          <img src="../assets/img/cards/visa.png" alt="visa">
-                        </div>
+                        
                       </div>
                       <div class="col-lg-4 text-right">
                         <div class="invoice-detail-item">

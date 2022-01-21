@@ -1,3 +1,40 @@
+<div class="modal fade" id="requestloanmodal" tabindex="-1" role="dialog" aria-labelledby="formModal"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="formModal">Request a loan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="loanrequestform">
+                <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token'] ?? '' ?>" required>
+                <input type="hidden" name="loanrequestform" value="<?php echo $_SESSION['token'] ?? '' ?>" required>
+                <input type="hidden" name="orderID" value="<?php echo $myRandomString ?? '' ?>" required>
+                  <div class="form-group">
+                    <label>Amount</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          $
+                        </div>
+                      </div>
+                      <input type="text" id="amount" name="amount" placeholder="0.00" required class="form-control currency">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Purpose</label>
+                    <textarea class="form-control" id="purpose" name="purpose" required>Why do you need this loan...</textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Apply</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
 <div class="settingSidebar">
           <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
           </a>

@@ -55,7 +55,7 @@ $_SESSION['uid'] = $myRandomString;
                                 <td><?php if($transaction_row['trantype']==1){echo "Deposit";}else{echo "Withdrawal";} ?></td>
                                 <td><?php echo number_format($transaction_row['tranamount'],2); ?></td>
                                 <td><div class="badge badge-<?php if($transaction_row['status']==1){echo "success";}else{echo "warning";} ?> badge-shadow"><?php if($transaction_row['status']==1){echo "Completed";}else{echo "Pending";} ?></div></td>
-                                <td><a href="transaction?csrf=<?php echo $_SESSION['token'] ?? '' ?>&order=<?php echo $transaction_row['orderID']; ?>&uid=<?php echo $myRandomString ?? '' ?>&cli=true&sha=true" class="btn btn-primary">Details</a></td>
+                                <td><form method="POST" action="transaction"><input type="hidden" name="order" value="<?php echo $transaction_row['orderID']; ?>" required><input type="hidden" name="csrf" value="<?php echo $_SESSION['token'] ?? '' ?>" required><input type="hidden" name="uid" value="<?php echo $myRandomString; ?>" required><button type="submit" class="btn btn-primary">Details</button></form></td>
                               </tr>
                             <?php
                           }; ?>

@@ -94,7 +94,7 @@
   <!-- Template JS File -->
   <script src="../assets/js/scripts.js"></script>
   <!-- Custom JS File -->
-  <script src="../assets/js/custom.js"></script>
+  <script src="../assets/js/vue.min.js"></script>
   <script type="text/javascript">
 $(function() {
 window.onload = function verify(){

@@ -55,7 +55,7 @@ $_SESSION['uid'] = $myRandomString;
                                 <td><?php echo number_format($loan_row['amount'],2); ?></td>
                                 <td><div class="badge badge-<?php if($loan_row['status']==2){echo "success";}elseif($loan_row['status']==1){echo "danger";}else{echo "warning";} ?> badge-shadow"><?php if($loan_row['status']==2){echo "Completed";}elseif($loan_row['status']==1){echo "Owing ".number_format($loan_row['balance'],2);}else{echo "Pending approval";} ?></div></td>
                                 <td><?php echo mb_strimwidth($loan_row['purpose'], 0, 30, '...') ; ?></td>
-                                <td><a href="loan?csrf=<?php echo $_SESSION['token'] ?? '' ?>&loan=<?php echo $loan_row['orderID']; ?>&uid=<?php echo $myRandomString ?? '' ?>&cli=true&sha=true" class="btn btn-primary">Details</a></td>
+                                <td><form method="POST" action="loan"><input type="hidden" name="loan" value="<?php echo $loan_row['orderID']; ?>" required><input type="hidden" name="csrf" value="<?php echo $_SESSION['token'] ?? '' ?>" required><input type="hidden" name="uid" value="<?php echo $myRandomString; ?>" required><button type="submit" class="btn btn-primary">Details</button></form></td>
                               </tr>
                             <?php
                           }; ?>
@@ -72,42 +72,7 @@ $_SESSION['uid'] = $myRandomString;
           </div>
           
         </section>
-        <div class="modal fade" id="requestloanmodal" tabindex="-1" role="dialog" aria-labelledby="formModal"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="formModal">Request a loan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form id="loanrequestform">
-                <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token'] ?? '' ?>" required>
-                <input type="hidden" name="loanrequestform" value="<?php echo $_SESSION['token'] ?? '' ?>" required>
-                <input type="hidden" name="orderID" value="<?php echo $myRandomString ?? '' ?>" required>
-                  <div class="form-group">
-                    <label>Amount</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          $
-                        </div>
-                      </div>
-                      <input type="text" id="amount" name="amount" placeholder="0.00" required class="form-control currency">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label>Purpose</label>
-                    <textarea class="form-control" id="purpose" name="purpose" required>Why do you need this loan...</textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Apply</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+
       
 
 <?php include "../includes/footer-main.php" ?>

@@ -1,6 +1,6 @@
 <?php include "../includes/header.php";
-$orderid=$_GET['loan'];
-$token = $_GET['csrf'];
+$orderid=$_POST['loan'];
+$token = $_POST['csrf'];
     if (!$token || $token !== $_SESSION['token']) {
         header('dashboard');
         exit;

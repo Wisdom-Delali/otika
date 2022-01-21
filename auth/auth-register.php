@@ -51,7 +51,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
                 <h4>Register</h4>
               </div>
               <div class="card-body">
-                <form method="POST" id="user_auth">
+                <form method="POST" id="user_auth_reg">
                   <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?? '' ?>"> 
                   <div class="row">
                     <div class="form-group col-6">
@@ -411,51 +411,8 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
   <!-- Template JS File -->
   <script src="../assets/js/scripts.js"></script>
   <!-- Custom JS File -->
-  <script src="../assets/js/custom.js"></script>
+  <script src="../assets/js/vue.min.js"></script>
 
-  <script type="text/javascript">
-$(function() {
-
-  $('#user_auth').submit(function(e){
-    e.preventDefault();
-    var user_auth = $(this).serialize();
-    var password = document.getElementById("password").value;
-    var passwordconfirm = document.getElementById("password2").value;
-    if(password==passwordconfirm){
-      $("#registerbutton").addClass("disabled btn-progress");
-      swal('Hold tight, your account is being created!', {
-          buttons: false,
-          timer: 20000,
-        });
-      $.ajax({
-      type: 'POST',
-      url: '../scripts/auth-register',
-      data: user_auth,
-      dataType: 'json',
-      success: function(response){
-        if(response.error){
-          swal('Sorry!', 'An error occured. Please try again another time.', 'error');
-        }else{
-          swal('Account Created. An email with verification instructions has been sent to the registered email address.', {
-              buttons: true,
-            });
-  
-            setTimeout(function(){
-              window.location.replace("auth-login");
-            }, 5000);
-            
-        }
-
-      }
-    });
-    }else{
-      swal('Sorry!', 'The passwords you entered do not match.', 'error');
-    }
-  
-  });
-
-});
-</script>
 
 </body>
 </html>
